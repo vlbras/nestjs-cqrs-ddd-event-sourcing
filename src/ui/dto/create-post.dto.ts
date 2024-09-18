@@ -1,5 +1,5 @@
-import { PostPriorities } from '@domain/enums/post-priorities.enum';
-import { IsEnum, IsMongoId, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { AuthorReputations, PostPriorities } from '@domain/enums';
+import { IsEnum, IsMongoId, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreatePostDto {
   @IsString()
@@ -16,6 +16,6 @@ export class CreatePostDto {
   @IsEnum(PostPriorities)
   public priority: PostPriorities;
 
-  @IsNumber()
-  public authorReputation: number;
+  @IsEnum(AuthorReputations)
+  public authorReputation: AuthorReputations;
 }

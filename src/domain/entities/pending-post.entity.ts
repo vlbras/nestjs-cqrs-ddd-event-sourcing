@@ -1,5 +1,4 @@
-import { PostPriorities } from '@domain/enums/post-priorities.enum';
-import { PostStatuses } from '@domain/enums/post-statuses.enum';
+import { AuthorReputations, PostPriorities, PostStatuses } from '@domain/enums';
 
 import { ApprovedPost, ApprovedPostData } from './approved-post.entity';
 import { Post } from './post.entity';
@@ -21,5 +20,5 @@ export class PendingPost extends Post<PendingPostData> {
 
 export type PendingPostData = {
   priority: PostPriorities;
-  authorReputation: number;
+  authorReputation: AuthorReputations;
 };

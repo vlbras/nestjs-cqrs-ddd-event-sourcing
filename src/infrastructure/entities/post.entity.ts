@@ -1,4 +1,4 @@
-import { PostStatuses } from '@domain/enums/post-statuses.enum';
+import { PostStatuses } from '@domain/enums';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types, Schema as Property } from 'mongoose';
 

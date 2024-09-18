@@ -15,18 +15,18 @@ import { UnprocessableEntityException } from '@nestjs/common';
 
 export class PostEventMapper {
   public static toDomainModel(entities: PostEventEntity[]): PostEventModel {
-    const model: PostEventModel = {
+    const model: Partial<PostEventModel> = {
       postId: entities[0].postId,
-      [PostStatuses.PENDING]: {},
-      [PostStatuses.APPROVED]: {},
-      [PostStatuses.REJECTED]: {},
     };
 
     entities.forEach(entity => {
-      model[entity.status] = entity.data;
+      model[entity.status] = {
+        ...entity.data,
+        [entity.status + 'At']: entity.createdAt.toISOString(),
+      };
     });
 
-    return model;
+    return model as PostEventModel;
   }
 
   public static toDomainEntity(model: PostModel): Post {

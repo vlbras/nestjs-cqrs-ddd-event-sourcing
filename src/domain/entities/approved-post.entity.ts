@@ -1,4 +1,4 @@
-import { PostStatuses } from '@domain/enums/post-statuses.enum';
+import { PostStatuses } from '@domain/enums';
 
 import { Post } from './post.entity';
 import { RejectedPost, RejectedPostData } from './rejected-post.entity';
@@ -6,7 +6,6 @@ import { RejectedPost, RejectedPostData } from './rejected-post.entity';
 export class ApprovedPost extends Post<ApprovedPostData> {
   public constructor(id: string, data: ApprovedPostData) {
     super(id, PostStatuses.APPROVED, data);
-    this.data.approvedAt = new Date().toISOString();
   }
 
   public reject(data: RejectedPostData): RejectedPost {
@@ -16,5 +15,4 @@ export class ApprovedPost extends Post<ApprovedPostData> {
 
 export type ApprovedPostData = {
   approvedBy: string;
-  approvedAt?: string;
 };
