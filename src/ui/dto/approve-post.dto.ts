@@ -1,6 +1,6 @@
-import { IsMongoId } from 'class-validator';
+import { IsObjectId } from 'nestjs-object-id';
 
 export class ApprovePostDto {
-  @IsMongoId()
+  @IsObjectId()
   public approvedBy: string;
 }

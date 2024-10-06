@@ -1,5 +1,6 @@
 import { AuthorReputations, PostPriorities } from '@domain/enums';
-import { IsEnum, IsMongoId, IsNotEmpty, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { IsObjectId } from 'nestjs-object-id';
 
 export class CreatePostDto {
   @IsString()
@@ -10,7 +11,7 @@ export class CreatePostDto {
   @IsNotEmpty()
   public content: string;
 
-  @IsMongoId()
+  @IsObjectId()
   public authorId: string;
 
   @IsEnum(PostPriorities)

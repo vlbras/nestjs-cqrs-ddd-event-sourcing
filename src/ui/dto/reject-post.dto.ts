@@ -1,5 +1,6 @@
 import { RejectionReasons } from '@domain/enums';
-import { IsEnum, IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsObjectId } from 'nestjs-object-id';
 
 export class RejectPostDto {
   @IsEnum(RejectionReasons)
@@ -10,6 +11,6 @@ export class RejectPostDto {
   @IsNotEmpty()
   public comment?: string;
 
-  @IsMongoId()
+  @IsObjectId()
   public rejectedBy: string;
 }

@@ -3,7 +3,8 @@ import { PostCommandFacade } from '@application/providers/post-command.facade';
 import { PostQueryService } from '@application/providers/post-query.service';
 import { PostEventModel } from '@domain/models/post.event.model';
 import { PostModel } from '@domain/models/post.model';
-import { Controller, Get, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { IsObjectIdPipe } from 'nestjs-object-id';
 
 import { ApprovePostDto, CreatePostDto, RejectPostDto, UpdatePostDto } from './dto';
 
@@ -20,36 +21,36 @@ export class PostController {
   }
 
   @Get(':id')
-  public async getPost(id: string): Promise<PostModel> {
+  public async getPost(@Param('id', IsObjectIdPipe) id: string): Promise<PostModel> {
     return this.postQueryService.getPost(id);
   }
 
   @Post()
-  public async createPost(dto: CreatePostDto): Promise<void> {
+  public async createPost(@Body() dto: CreatePostDto): Promise<void> {
     const { priority, authorReputation } = dto;
     const command = new CreatePostCommand({ ...dto, eventData: { priority, authorReputation } });
     this.postCommandFacade.createPost(command);
   }
 
   @Patch(':id')
-  public async updatePost(id: string, dto: UpdatePostDto): Promise<void> {
+  public async updatePost(@Param('id', IsObjectIdPipe) id: string, @Body() dto: UpdatePostDto): Promise<void> {
     const command = new UpdatePostCommand(id, dto);
     this.postCommandFacade.updatePost(command);
   }
 
   @Get(':id/events')
-  public async getPostEvents(id: string): Promise<PostEventModel> {
+  public async getPostEvents(@Param('id', IsObjectIdPipe) id: string): Promise<PostEventModel> {
     return this.postQueryService.getPostEvents(id);
   }
 
   @Patch(':id/approve')
-  public async approvePost(id: string, dto: ApprovePostDto): Promise<void> {
+  public async approvePost(@Param('id', IsObjectIdPipe) id: string, @Body() dto: ApprovePostDto): Promise<void> {
     const command = new ApprovePostCommand(id, dto);
     this.postCommandFacade.approvePost(command);
   }
 
   @Patch(':id/reject')
-  public async rejectPost(id: string, dto: RejectPostDto): Promise<void> {
+  public async rejectPost(@Param('id', IsObjectIdPipe) id: string, @Body() dto: RejectPostDto): Promise<void> {
     const command = new RejectPostCommand(id, dto);
     this.postCommandFacade.rejectPost(command);
   }
