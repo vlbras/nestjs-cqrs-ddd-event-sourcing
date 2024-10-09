@@ -1,6 +1,6 @@
-import { Logger, UnprocessableEntityException } from '@nestjs/common';
 import { PostStatuses } from '@post/domain/enums/post-statuses.enum';
 
+import { ApprovePostError, RejectPostError } from '../errors';
 import { ApprovedPostData } from './approved-post.domain-entity';
 import { RejectedPostData } from './rejected-post.domain-entity';
 
@@ -11,15 +11,11 @@ export class Post<T extends Record<string, unknown> = Record<string, unknown>> {
     public readonly data: T,
   ) {}
 
-  private readonly logger = new Logger(Post.name);
-
   public approve(_: ApprovedPostData): void {
-    this.logger.error(`Post with status ${this.status} cannot be approved: ${_}`);
-    throw new UnprocessableEntityException(`Post with status ${this.status} cannot be approved`);
+    throw new ApprovePostError(this.id, this.status);
   }
 
   public reject(_: RejectedPostData): void {
-    this.logger.error(`Post with status ${this.status} cannot be rejected: ${_}`);
-    throw new UnprocessableEntityException(`Post with status ${this.status} cannot be rejected`);
+    throw new RejectPostError(this.id, this.status);
   }
 }
