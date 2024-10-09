@@ -56,7 +56,7 @@ export class PostRepository {
       status?: PostStatuses;
       eventData?: Record<string, unknown>;
     },
-  ): Promise<void> {
+  ): Promise<PostModel | null> {
     if (Object.keys(data).length === 0) {
       throw new BadRequestException('No data provided');
     }
@@ -65,8 +65,6 @@ export class PostRepository {
       .findOneAndUpdate({ _id: new Types.ObjectId(id) }, data, { lean: true, new: true })
       .exec();
 
-    if (!post) {
-      throw new NotFoundException('Post not found');
-    }
+    return post ? PostMapper.toDomainModel(post) : null;
   }
 }
