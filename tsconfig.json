@@ -17,9 +17,9 @@
     "noFallthroughCasesInSwitch": true,
     "useUnknownInCatchVariables": false,
     "paths": {
-      "@domain/*": ["src/domain/*"],
-      "@infrastructure/*": ["src/infrastructure/*"],
-      "@application/*": ["src/application/*"],
+      "@post/domain/*": ["src/post/domain/*"],
+      "@post/infrastructure/*": ["src/post/infrastructure/*"],
+      "@post/application/*": ["src/post/application/*"],
     }
   }
 }
